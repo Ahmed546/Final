@@ -1,15 +1,17 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Button, Card, Image } from 'semantic-ui-react';
-import { Activity } from '../../app/layout/models/activity';
+import LoadingComponent from '../../app/layout/LoadingComponent';
+import { useStore } from '../../app/stores/store';
 
-interface Props {
-    activity: Activity;
-    cancelActivity: () => void;
-    openForm: (id?: string) => void;
-    
-}
 
-export default function ActivityDetails({ activity,cancelActivity,openForm }: Props) {
+
+export default observer( function ActivityDetails() {
+
+    const {activityStore} = useStore();
+    const {selectedActivity:activity,openForm,cancelSelectedActivity} = activityStore; 
+
+    if(!activity) return <LoadingComponent />;
 
     return (
 
@@ -27,10 +29,10 @@ export default function ActivityDetails({ activity,cancelActivity,openForm }: Pr
             <Card.Content extra>
                 <Button.Group widths='2' >
 
-                    <Button onClick={() => openForm(activity.id)} basic color='blue' content='Edit' />
-                    <Button onClick={cancelActivity} basic color='blue' content='Cancel' />
+                    <Button onClick={()=> openForm(activity.id)} basic color='blue' content='Edit' />
+                    <Button onClick={cancelSelectedActivity} basic color='blue' content='Cancel' />
                 </Button.Group>
             </Card.Content>
-        </Card>
+        </Card> 
     );
-}
+});

@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';  
 import '../src/app/layout/styles.css';
 import App from './app/layout/App';
+import {  store, StoreContext } from './app/stores/store';
 import reportWebVitals from './reportWebVitals';
 
 
 ReactDOM.render(
   
-    <App />, document.getElementById('root')
+    <StoreContext.Provider value={store}>
+
+<App />
+    </StoreContext.Provider>
+    , document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
